@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
 
     void HandleMovement()
     {
-        // Yere temas kontrolü
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)

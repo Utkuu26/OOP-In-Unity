@@ -11,27 +11,22 @@ public class PickupItem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+            PlayerPickupHandler pickupHandler = other.GetComponent<PlayerPickupHandler>();
 
-            if (playerHealth != null)
+            if (pickupType == PickupType.HealthSmall && playerHealth != null)
             {
-                switch (pickupType)
-                {
-                    case PickupType.HealthSmall:
-                        playerHealth.RestoreHealth(playerHealth.maxHealth / 2); // Caný %50 artýr
-                        break;
-                    case PickupType.HealthFull:
-                        playerHealth.SetFullHealth(); // Tam can yap
-                        break;
-                    case PickupType.Speed:
-                        // Þu anlýk speed boost yapmýyoruz, sonra ekleriz
-                        break;
-                    case PickupType.Weapon:
-                        // Þu anlýk silah deðiþtirme yapmýyoruz, sonra ekleriz
-                        break;
-                }
+                playerHealth.RestoreHealth(playerHealth.maxHealth / 2);
+            }
+            else if (pickupType == PickupType.HealthFull && playerHealth != null)
+            {
+                playerHealth.SetFullHealth();
+            }
+            else if (pickupType == PickupType.Speed && pickupHandler != null)
+            {
+                pickupHandler.ActivateSlowMotion();
             }
 
-            Destroy(gameObject); // Pickup alýnca yok olsun
+            Destroy(gameObject); 
         }
     }
 }
