@@ -7,8 +7,7 @@ public class WeaponManager : MonoBehaviour
     public GameObject pistolObject;
     public GameObject shotgunObject;
     public GameObject rifleObject;
-
-    private WeaponType currentWeapon;
+    public WeaponType CurrentWeapon { get; private set; }
 
     void Start()
     {
@@ -17,7 +16,7 @@ public class WeaponManager : MonoBehaviour
 
     public void EquipWeapon(WeaponType weaponType)
     {
-        currentWeapon = weaponType;
+        CurrentWeapon = weaponType;
 
         pistolObject.SetActive(weaponType == WeaponType.Pistol);
         shotgunObject.SetActive(weaponType == WeaponType.Shotgun);
