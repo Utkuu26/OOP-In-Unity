@@ -5,6 +5,11 @@ public enum PickupType { WeaponPistol, WeaponShotgun, WeaponRifle, HealthSmall, 
 public class PickupItem : MonoBehaviour
 {
     public PickupType pickupType;
+    public ParticleSystem pickupVFX;
+    private void Awake()
+    {
+        pickupVFX = GetComponentInChildren<ParticleSystem>(true);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -38,10 +43,16 @@ public class PickupItem : MonoBehaviour
                 break;
         }
 
-        // Pickup sesini çal (Player'ýn AudioSource'undan)
         AudioClip clip = PickupSoundManager.Instance?.GetClip(pickupType);
         if (playerAudio != null && clip != null)
             playerAudio.PlayOneShot(clip);
+
+        if (pickupVFX != null)
+        {
+            pickupVFX.transform.parent = null;
+            pickupVFX.Play();
+            Destroy(pickupVFX.gameObject, pickupVFX.main.duration);
+        }
 
         Destroy(gameObject);
     }

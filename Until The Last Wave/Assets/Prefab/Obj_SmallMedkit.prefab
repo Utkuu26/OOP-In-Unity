@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupType: 3
+  pickupVFX: {fileID: 0}
 --- !u!1001 &8640814464838234979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141,7 +142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7662913529153330500, guid: 108ca465382c11742bd2c91fe4fdb13f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.245
       objectReference: {fileID: 0}
     - target: {fileID: 7662913529153330500, guid: 108ca465382c11742bd2c91fe4fdb13f, type: 3}
       propertyPath: m_LocalPosition.z
