@@ -20,6 +20,11 @@ public class WeaponShooter : MonoBehaviour
     public AudioClip shotgunSound;
     public AudioClip rifleSound;
 
+    public ParticleSystem pistolFlash;
+    public ParticleSystem shotgunFlash;
+    public ParticleSystem rifleFlash;
+
+
     void Update()
     {
         if (Input.GetButtonDown("Fire1") && Time.time >= nextFireTime)
@@ -40,16 +45,19 @@ public class WeaponShooter : MonoBehaviour
                 damage = pistolDamage;
                 fireRate = pistolFireRate;
                 fireClip = pistolSound;
+                if (pistolFlash != null) pistolFlash.Play();
                 break;
             case WeaponType.Shotgun:
                 damage = shotgunDamage;
                 fireRate = shotgunFireRate;
                 fireClip = shotgunSound;
+                if (shotgunFlash != null) shotgunFlash.Play();
                 break;
             case WeaponType.Rifle:
                 damage = rifleDamage;
                 fireRate = rifleFireRate;
                 fireClip = rifleSound;
+                if (rifleFlash != null) rifleFlash.Play();
                 break;
         }
 
