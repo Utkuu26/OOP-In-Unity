@@ -31,6 +31,11 @@ public class WeaponShooter : MonoBehaviour
         {
             Shoot();
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            weaponManager.ToggleAim();
+        }
     }
 
     void Shoot()

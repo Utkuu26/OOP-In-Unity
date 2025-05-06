@@ -456,8 +456,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1828429, y: 0.17664653, z: 0.8819078}
-  m_Center: {x: -0.0066192946, y: 0.008912882, z: 0.020921867}
+  m_Size: {x: 0.1828429, y: 0.17664653, z: 0.7377151}
+  m_Center: {x: -0.0066192946, y: 0.008912882, z: 0.02549394}
 --- !u!114 &260041610391494864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupType: 2
-  soundManager: {fileID: 0}
+  pickupVFX: {fileID: 0}
 --- !u!1 &9050703386972370209
 GameObject:
   m_ObjectHideFlags: 0
