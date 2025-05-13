@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public enum WeaponType { Pistol, Shotgun, Rifle }
 
@@ -19,15 +20,20 @@ public class WeaponManager : MonoBehaviour
 
     [Header("ADS Timing")]
     public float adsLockDelay = 0.5f;
-
     private float adsTimer = 0f;
     private bool isAiming = false;
     private bool hasLockedFinalTransform = false;
-
     private Vector3 localOffsetPos;
     private Quaternion localOffsetRot;
 
     public GameObject crosshairGameObject;
+
+    [Header("Ammo Settings")]
+    public int pistolAmmo = 10;
+    public int shotgunAmmo = 10;
+    public int rifleAmmo = 30;
+
+    public int currentAmmo;
 
     public WeaponType CurrentWeapon { get; private set; }
 
@@ -43,6 +49,13 @@ public class WeaponManager : MonoBehaviour
         pistolObject.SetActive(weaponType == WeaponType.Pistol);
         shotgunObject.SetActive(weaponType == WeaponType.Shotgun);
         rifleObject.SetActive(weaponType == WeaponType.Rifle);
+
+        switch (weaponType)
+        {
+            case WeaponType.Pistol: currentAmmo = pistolAmmo; break;
+            case WeaponType.Shotgun: currentAmmo = shotgunAmmo; break;
+            case WeaponType.Rifle: currentAmmo = rifleAmmo; break;
+        }
     }
 
     public void ToggleAim()
@@ -74,6 +87,8 @@ public class WeaponManager : MonoBehaviour
                 }
             }
         }
+
+        
     }
 
     void LateUpdate()

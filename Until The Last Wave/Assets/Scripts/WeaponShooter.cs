@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class WeaponShooter : MonoBehaviour
@@ -19,11 +20,13 @@ public class WeaponShooter : MonoBehaviour
     public AudioClip pistolSound;
     public AudioClip shotgunSound;
     public AudioClip rifleSound;
+    public AudioClip emptyFireSound;
 
     public ParticleSystem pistolFlash;
     public ParticleSystem shotgunFlash;
     public ParticleSystem rifleFlash;
 
+    public TextMeshProUGUI ammoText;
 
     void Update()
     {
@@ -36,10 +39,25 @@ public class WeaponShooter : MonoBehaviour
         {
             weaponManager.ToggleAim();
         }
+
+        ammoText.text = weaponManager.currentAmmo.ToString();
     }
 
     void Shoot()
     {
+        if (weaponManager.currentAmmo <= 0)
+        {
+            Debug.Log("Mermi yok!");
+
+            // Boþ ateþ sesi çal
+            if (audioSource != null && emptyFireSound != null)
+            {
+                audioSource.PlayOneShot(emptyFireSound);
+            }
+
+            return;
+        }
+
         float damage = 0f;
         float fireRate = 0f;
         AudioClip fireClip = null;
@@ -67,9 +85,9 @@ public class WeaponShooter : MonoBehaviour
         }
 
         nextFireTime = Time.time + fireRate;
+        weaponManager.currentAmmo--;
 
         Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 1f); //Raycast çizdirme
 
         if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
@@ -87,5 +105,7 @@ public class WeaponShooter : MonoBehaviour
         {
             audioSource.PlayOneShot(fireClip);
         }
+
+        
     }
 }
