@@ -32,8 +32,9 @@ public class WeaponManager : MonoBehaviour
     public int pistolAmmo = 10;
     public int shotgunAmmo = 10;
     public int rifleAmmo = 30;
-
-    public int currentAmmo;
+    public int maxPistolAmmo = 30;
+    public int maxShotgunAmmo = 20;
+    public int maxRifleAmmo = 60;
 
     public WeaponType CurrentWeapon { get; private set; }
 
@@ -49,13 +50,6 @@ public class WeaponManager : MonoBehaviour
         pistolObject.SetActive(weaponType == WeaponType.Pistol);
         shotgunObject.SetActive(weaponType == WeaponType.Shotgun);
         rifleObject.SetActive(weaponType == WeaponType.Rifle);
-
-        switch (weaponType)
-        {
-            case WeaponType.Pistol: currentAmmo = pistolAmmo; break;
-            case WeaponType.Shotgun: currentAmmo = shotgunAmmo; break;
-            case WeaponType.Rifle: currentAmmo = rifleAmmo; break;
-        }
     }
 
     public void ToggleAim()
@@ -100,12 +94,36 @@ public class WeaponManager : MonoBehaviour
             {
                 weaponTransform.position = cameraTransform.position + cameraTransform.rotation * localOffsetPos;
                 weaponTransform.rotation = cameraTransform.rotation * localOffsetRot;
-
-                // Debug çizgi: silahýn yönü nereye bakýyor
                 Debug.DrawRay(weaponTransform.position, weaponTransform.forward * 10f, Color.green);
             }
         }
     }
+
+    public bool TryAddAmmo(int amount)
+    {
+        switch (CurrentWeapon)
+        {
+            case WeaponType.Pistol:
+                if (pistolAmmo >= maxPistolAmmo) return false;
+                Debug.Log($"Ammo before: {pistolAmmo}");
+                pistolAmmo = Mathf.Min(pistolAmmo + amount, maxPistolAmmo);
+                Debug.Log($"Ammo after: {pistolAmmo}");
+                return true;
+
+            case WeaponType.Shotgun:
+                if (shotgunAmmo >= maxShotgunAmmo) return false;
+                shotgunAmmo = Mathf.Min(shotgunAmmo + amount, maxShotgunAmmo);
+                return true;
+
+            case WeaponType.Rifle:
+                if (rifleAmmo >= maxRifleAmmo) return false;
+                rifleAmmo = Mathf.Min(rifleAmmo + amount, maxRifleAmmo);
+                return true;
+        }
+
+        return false;
+    }
+
 
     private Transform GetCurrentWeaponTransform()
     {
@@ -126,6 +144,17 @@ public class WeaponManager : MonoBehaviour
             WeaponType.Shotgun => shotgunAnimator,
             WeaponType.Rifle => rifleAnimator,
             _ => null
+        };
+    }
+
+    public int GetAmmo()
+    {
+        return CurrentWeapon switch
+        {
+            WeaponType.Pistol => pistolAmmo,
+            WeaponType.Shotgun => shotgunAmmo,
+            WeaponType.Rifle => rifleAmmo,
+            _ => 0
         };
     }
 }

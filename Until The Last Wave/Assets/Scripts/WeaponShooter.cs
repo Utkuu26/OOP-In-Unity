@@ -40,16 +40,16 @@ public class WeaponShooter : MonoBehaviour
             weaponManager.ToggleAim();
         }
 
-        ammoText.text = weaponManager.currentAmmo.ToString();
+        // Doðrudan aktif silaha ait ammo bilgisini UI'ya yaz
+        ammoText.text = weaponManager.GetAmmo().ToString();
     }
 
     void Shoot()
     {
-        if (weaponManager.currentAmmo <= 0)
+        if (weaponManager.GetAmmo() <= 0)
         {
             Debug.Log("Mermi yok!");
 
-            // Boþ ateþ sesi çal
             if (audioSource != null && emptyFireSound != null)
             {
                 audioSource.PlayOneShot(emptyFireSound);
@@ -69,26 +69,28 @@ public class WeaponShooter : MonoBehaviour
                 fireRate = pistolFireRate;
                 fireClip = pistolSound;
                 if (pistolFlash != null) pistolFlash.Play();
+                weaponManager.pistolAmmo--;
                 break;
             case WeaponType.Shotgun:
                 damage = shotgunDamage;
                 fireRate = shotgunFireRate;
                 fireClip = shotgunSound;
                 if (shotgunFlash != null) shotgunFlash.Play();
+                weaponManager.shotgunAmmo--;
                 break;
             case WeaponType.Rifle:
                 damage = rifleDamage;
                 fireRate = rifleFireRate;
                 fireClip = rifleSound;
                 if (rifleFlash != null) rifleFlash.Play();
+                weaponManager.rifleAmmo--;
                 break;
         }
 
         nextFireTime = Time.time + fireRate;
-        weaponManager.currentAmmo--;
 
         Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 1f); //Raycast çizdirme
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 1f);
 
         if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
         {
@@ -105,7 +107,5 @@ public class WeaponShooter : MonoBehaviour
         {
             audioSource.PlayOneShot(fireClip);
         }
-
-        
     }
 }
