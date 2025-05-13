@@ -577,7 +577,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1438705719}
   - {fileID: 330585546}
   - {fileID: 412792377}
   - {fileID: 45572915}
@@ -676,10 +675,9 @@ MonoBehaviour:
   pistolAnimator: {fileID: 1409527383}
   shotgunAnimator: {fileID: 980911220}
   rifleAnimator: {fileID: 822245068}
-  cameraTransform: {fileID: 330585546}
-  pistolADSPosition: {fileID: 624018379}
-  shotgunADSPosition: {fileID: 515535312}
-  rifleADSPosition: {fileID: 58859392}
+  cameraTransform: {fileID: 0}
+  adsLockDelay: 1
+  crosshairGameObject: {fileID: 210628666}
 --- !u!82 &221907094
 AudioSource:
   m_ObjectHideFlags: 0
@@ -894,7 +892,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.494, z: 0.345}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1438705719}
   m_Father: {fileID: 221907088}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &330585547
@@ -2134,14 +2133,14 @@ Transform:
   m_GameObject: {fileID: 1438705718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.9948628, z: -0, w: -0.101233035}
-  m_LocalPosition: {x: 0.12, y: 0.16299999, z: 0.954}
+  m_LocalPosition: {x: 0.12, y: -0.331, z: 0.60899997}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 624018379}
   - {fileID: 58859392}
   - {fileID: 515535312}
-  m_Father: {fileID: 221907088}
+  m_Father: {fileID: 330585546}
   m_LocalEulerAnglesHint: {x: 0, y: -191.62, z: 0}
 --- !u!1 &1454057987
 GameObject:
