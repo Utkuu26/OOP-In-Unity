@@ -22,4 +22,21 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         Debug.Log("Health Fully Restored");
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            var manager = FindFirstObjectByType<GameManager>();
+            manager?.PlayerDied();
+            Die();
+        }
+    }
+
+    void Die()
+    {
+
+        // veya
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // yeniden baþlat
+    }
 }
