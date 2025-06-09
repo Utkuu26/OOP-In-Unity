@@ -2,7 +2,7 @@ public class RunnerZombie : EnemyBase
 {
     protected override void Start()
     {
-        maxHealth = 60f;
+        maxHealth = 20f;
         base.Start();
         agent.speed = 4.5f;
     }
