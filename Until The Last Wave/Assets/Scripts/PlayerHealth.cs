@@ -37,16 +37,15 @@ public class PlayerHealth : MonoBehaviour
     {
         if (other.CompareTag("Water"))
         {
-            var manager = FindFirstObjectByType<GameManager>();
-            manager?.PlayerDied();
+            
             Die();
         }
     }
 
     void Die()
     {
-
-        // veya
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // yeniden baþlat
+        var manager = FindFirstObjectByType<GameManager>();
+        manager?.PlayerDied();
+       
     }
 }

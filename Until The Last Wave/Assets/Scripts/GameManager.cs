@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -6,6 +7,14 @@ public class GameManager : MonoBehaviour
     public GameObject deathMenu;
 
     private bool isGameOver = false;
+
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1f;
+        isGameOver = false;
+        Cursor.visible = false;
+    }
 
     public void PlayerDied()
     {
