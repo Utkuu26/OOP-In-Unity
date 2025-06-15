@@ -3,11 +3,21 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
-    public int currentHealth;
+    public float currentHealth;
 
     void Start()
     {
         currentHealth = maxHealth;
+    }
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        Debug.Log($"Player took {amount} damage. Remaining health: {currentHealth}");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     public void RestoreHealth(int amount)

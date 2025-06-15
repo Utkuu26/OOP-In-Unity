@@ -9,12 +9,17 @@ public abstract class EnemyBase : MonoBehaviour
 
     public float maxHealth = 100f;
     public float attackRange = 2f;
-    public float attackCooldown = 1.5f; // arka arkaya saldırmayı engellemek için
+    public float attackCooldown = 1.0f; 
 
     public float currentHealth;
     protected bool isDead = false;
     protected bool isAttacking = false;
     private float lastAttackTime = -Mathf.Infinity;
+
+    protected virtual float ContactDamage => 5f;
+    public float damageInterval = 1f; 
+    private float damageTimer = 0f;
+    private bool IsPlayerInContact = false;
 
     protected virtual void Start()
     {
@@ -57,6 +62,21 @@ public abstract class EnemyBase : MonoBehaviour
             float currentSpeed = agent.velocity.magnitude;
             animator.SetFloat("Speed", currentSpeed);
         }
+
+        if (IsPlayerInContact)
+        {
+            damageTimer += Time.deltaTime;
+            if (damageTimer >= damageInterval)
+            {
+                PlayerHealth ph = player.GetComponent<PlayerHealth>();
+                if (ph != null)
+                {
+                    ph.TakeDamage(ContactDamage); 
+                }
+                damageTimer = 0f;
+            }
+        }
+
     }
 
     public virtual void TakeDamage(float damage)
@@ -72,7 +92,7 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    public void StopMovement() // animasyon eventiyle tetiklenebilir
+    public void StopMovement() 
     {
         if (agent != null)
         {
@@ -97,5 +117,23 @@ public abstract class EnemyBase : MonoBehaviour
         animator.SetFloat("Speed", 0f);
         animator.SetTrigger("Die");
         Destroy(gameObject, 3f);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            IsPlayerInContact = true;
+            damageTimer = damageInterval; 
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            IsPlayerInContact = false;
+            damageTimer = 0f;
+        }
     }
 }
